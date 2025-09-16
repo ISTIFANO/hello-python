@@ -54,7 +54,17 @@ produit = get_nembre1 * get_nember2
 if produit > 0:
     print("Le produit est positif.")
 elif produit < 0:
-    print("Le produit est négatif.")
+    print("Le produit est negatif.")
 else:
     print("Le produit est nul.")
+
+# Challenge 5 : Somme d’entiers
+
+N = int(input("donner moi le  nombre entier N : "))
+somme = 0
+i = 1
+while i <= N:
+    somme += i
+    i += 1
+print("La somme de 1 a", N, "est", somme)
 
