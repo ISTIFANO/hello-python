@@ -14,3 +14,10 @@ def horaire_sup(nom: str, salaire_horaire: float, nb_heures: int) -> float:
 
 horaire_sup("aamir",22.2,12)    
 
+
+# Challenge 2 : Fonction calculation() – somme et différence
+
+def calculation(a, b):
+    somme = a + b
+    difference = a - b
+    return somme, difference
