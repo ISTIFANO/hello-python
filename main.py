@@ -1,4 +1,5 @@
 from .Exeption  import STRExeptionHandler
+import math
 # # 	Challenge 1 : Présentation personnalisée 
 
 get_prenom = input("donner moi votre nom")
@@ -77,3 +78,16 @@ while i >= 0:
     inverse += chaine[i]
     i -= 1
 print("la chaine est  :", inverse)
+
+# Challenge 7 : Calcul de distance entre deux points
+
+x1 = float(input("donner moi x1: "))
+x2 = float(input("donner moi x2: "))
+y1 = float(input("donner moi y1: "))
+y2 = float(input("donner moi y2: "))
+
+
+resultat = (math.sqrt((x2-x1)**2 + (y2-y1)**2))
+
+print("resultat est" , resultat)
+
