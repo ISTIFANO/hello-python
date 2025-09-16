@@ -9,4 +9,19 @@ for i in range(nb):
 moy = sum / nb
 print(moy)
 
-# Challenge 2 : Les mots communs
+# regrouper dans une liste les mots communs entre deux chaînes de caractères Ch1 et Ch2.
+Ch1 = "test AAmir Python AAAmer "
+Ch2 = "Python mots communs entre "
+
+mots1 = Ch1.split()
+mots2 = Ch2.split()
+
+communs = []
+for mot1 in mots1:
+    for mot2 in mots2:
+        if mot1 == mot2 and mot1 not in communs:
+            communs.append(mot1)
+
+print(communs)
+
+
