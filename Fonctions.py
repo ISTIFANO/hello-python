@@ -62,4 +62,11 @@ def affichageChar(char):
 affichageChar("dndks")
 
 
+# afficher le mot le plus long de cette phrase
 
+def PlusLong(phrase):
+    mots = phrase.split()
+    long = max(mots, key=len)
+    print(long)   
+
+PlusLong("phrase Aamir Aamirelamiri  py")
