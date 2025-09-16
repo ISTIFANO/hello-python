@@ -24,4 +24,4 @@ for mot1 in mots1:
 
 print(communs)
 
-
+# Challenge 3 : Manipulation et tri de listes mixtes
