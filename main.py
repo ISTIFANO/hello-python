@@ -68,3 +68,12 @@ while i <= N:
     i += 1
 print("La somme de 1 a", N, "est", somme)
 
+# Challenge 6 : Inverser une chaîne
+
+chaine = input("donner moi votre chaine: ")
+inverse = ""
+i = len(chaine) - 1
+while i >= 0:
+    inverse += chaine[i]
+    i -= 1
+print("la chaine est  :", inverse)
