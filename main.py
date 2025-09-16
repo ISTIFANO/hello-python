@@ -47,5 +47,14 @@ print("votre saliare total is", float(salaire_total))
 
 # Challenge 4 : Déterminer le signe d’un produit de deux nombres
 
+get_nembre1 = float(input("donner moi  le premier nombre : "))
+get_nember2 = float(input("donner moi  le 2 eme nombre : "))
+produit = get_nembre1 * get_nember2
 
+if produit > 0:
+    print("Le produit est positif.")
+elif produit < 0:
+    print("Le produit est négatif.")
+else:
+    print("Le produit est nul.")
 
