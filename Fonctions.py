@@ -70,3 +70,20 @@ def PlusLong(phrase):
     print(long)   
 
 PlusLong("phrase Aamir Aamirelamiri  py")
+
+# afficher le nombre d’occurrences de chaque caractère
+
+def Nbcaracteres(phrase):
+   dec ={}
+   for i in range(phrase):
+
+    if(phrase[i]==" "):
+      continue
+   if(phrase[i] in dec.keys()):
+      dec[phrase[i]] +=1
+   else:
+      dec.update({phrase[i] : 1})
+  
+   print(dec) 
+
+Nbcaracteres("phrrrase")
