@@ -86,4 +86,4 @@ def Nbcaracteres(phrase):
   
    print(dec) 
 
-Nbcaracteres("phrrrase")
+Nbcaracteres("phrrrase")    
