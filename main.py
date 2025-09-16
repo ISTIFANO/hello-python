@@ -18,3 +18,23 @@ if(nb_heures > 40):
     salaire_total += 40 * float(get_salaire_horaire) + revenue
 
 print("votre saliare total is" , float(salaire_total))
+
+#Challenge 3 : Gestion des erreurs utilisateur
+
+get_nom = str(input("donner moi votre nom :"))
+try:
+    get_salaire_horaire = float(input("donner moi votre  salaire horaire :"))
+    try:
+        nb_heures = int(input("donner moi votre  nombre d heures :"))
+        salaire_total = nb_heures * get_salaire_horaire
+
+        if nb_heures > 40:
+            revenue = (nb_heures - 40) * get_salaire_horaire * 1.5
+            salaire_total = 40 * get_salaire_horaire + revenue
+
+        print("votre saliare total is", float(salaire_total))
+    except ValueError:
+        print("votre numero not valide & must be int ")
+except ValueError:
+    print("votre numero not valide & must be float ")
+
