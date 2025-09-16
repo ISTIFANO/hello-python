@@ -1,3 +1,4 @@
+from .Exeption  import STRExeptionHandler
 # # 	Challenge 1 : Présentation personnalisée 
 
 get_prenom = input("donner moi votre nom")
@@ -22,6 +23,10 @@ print("votre saliare total is" , float(salaire_total))
 #Challenge 3 : Gestion des erreurs utilisateur
 
 get_nom = str(input("donner moi votre nom :"))
+if(get_age is not str):
+     
+    #  j ai ajouter la class a Exeption file 
+     raise STRExeptionHandler;
 try:
     get_salaire_horaire = float(input("donner moi votre  salaire horaire :"))
 except ValueError:
@@ -40,6 +45,7 @@ salaire_total = 40 * get_salaire_horaire + revenue
 print("votre saliare total is", float(salaire_total))
     
 
+# Challenge 4 : Déterminer le signe d’un produit de deux nombres
 
 
 
