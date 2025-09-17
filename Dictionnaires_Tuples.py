@@ -81,3 +81,14 @@ etudiantNonAdmis = {'Aamir': 8.7, 'Ahmed': 7.5, 'Haenae': 9.8}
 etudiantAdmis.update(etudiantNonAdmis)
 
 print(etudiantAdmis)
+
+# Challenge 3 : Conversion de Deux Listes en Dictionnaire
+
+keys =  ['Aamie', 'Aamir', 'kamal', 'dzee', 'isam']
+values  = [8.7,  7.5,  8.8]
+
+list = dict(zip(keys,values))
+
+print(list)
+
+# Challenge 4 : Tri d'un Dictionnaire
