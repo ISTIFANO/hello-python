@@ -31,5 +31,26 @@ for filename in files:
 print(content)
 
 # Challenge 2 : Recherche de Fichiers
+# methode 1
+with os.scandir(path) as allfiles:
+    for langue in allfiles:
+        print(langue)
+        if langue.is_file():
+            if (langue=="java.txt"):
+                print("FILE EXIST")
 
-
+# methode 2
+if(os.path.exists(path)):
+    print("file exist")
+else:
+    print("file note exist ")
+         
+#  Création de Répertoires
+    try:
+        os.mkdir("langues")
+        
+        print("folder has been created succ")
+    except FileExistsError:
+            print("Directory already exists.")
+    except Exception as Error:
+        print(Error)
