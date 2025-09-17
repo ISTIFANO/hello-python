@@ -54,10 +54,21 @@ First_dict["Système d’exploitation"] = "Windows 10"
 
 #Parti 2: 
 notes_eleves = { "Amine": 15.5, "Yassine": 19.0, "Reda": 14.2, "Malak": 8.7, "Manal": 20.0, "Ahmed": 7.5,"Saad": 11.3, "Hannae": 9.8 }
-
 somme = 0
 for cle, value in notes_eleves.items():
     somme += value
 moyenne = somme / len(notes_eleves)
 
 print(moyenne)
+# les étudiants admis et les valeurs des clés sont les moyennes obtenues
+
+for cle, value in notes_eleves.items():
+    if(value >10):
+      print(cle)
+
+
+# les étudiants non admis et les valeurs des clés sont les moyennes obtenues
+
+for cle, value in notes_eleves.items():
+    if(value <10):
+      print(cle)
