@@ -5,7 +5,7 @@ First_dict = { "Appareil": "Laptop", "Marque": "IBM",
                    "SSD": "1 To" }
 
 # Challenge 1 : Manipulation des dictionnaires Python
- 
+#  Parti 1: 
 # first methode  
 
 First_dict["RAM"]="32G"
@@ -48,5 +48,16 @@ First_dict["Processeur"], First_dict["Carte Graphique"] = First_dict["Carte Grap
 
 print(First_dict)
 
+# Ajouter la paire clé-valeur suivante : "Système d’exploitation": "Windows 10"
 
+First_dict["Système d’exploitation"] = "Windows 10"
 
+#Parti 2: 
+notes_eleves = { "Amine": 15.5, "Yassine": 19.0, "Reda": 14.2, "Malak": 8.7, "Manal": 20.0, "Ahmed": 7.5,"Saad": 11.3, "Hannae": 9.8 }
+
+somme = 0
+for cle, value in notes_eleves.items():
+    somme += value
+moyenne = somme / len(notes_eleves)
+
+print(moyenne)
