@@ -33,8 +33,20 @@ for cle, value in First_dict.items():
     
     print(value)
 
-    # La liste des paires clé-valeur
+# La liste des paires clé-valeur
+for cle, value in First_dict.items():
+    print({cle : value})
+    
+# Inverser les paires "Processeur" : "Intel core i7-G11" et "Carte Graphique" : "GeForce RTX 3070"
 
+for cle, value in First_dict.items():
+     if(cle == "Processeur" or cle == "Carte Graphique") :
+         First_dict["Processeur"]="Intel core i7-G11"
+         First_dict["Carte Graphique"]="GeForce RTX 3070"
+         
+First_dict["Processeur"], First_dict["Carte Graphique"] = First_dict["Carte Graphique"], First_dict["Processeur"]
+
+print(First_dict)
 
 
 
