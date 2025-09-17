@@ -92,3 +92,15 @@ list = dict(zip(keys,values))
 print(list)
 
 # Challenge 4 : Tri d'un Dictionnaire
+
+# Challenge 5 : Manipulation de tuples
+
+
+etudiant_info  =(("Prénom","Aamir"),("Âge",19),("Filière", "matimatic"),( "Moyenne générale",21),( "Moyenne générale", 21))
+
+# resultat = dict(etudiant_info)
+# for cle , value in resultat.items()
+#  print(cle ,":",value)
+
+for i in etudiant_info :
+    print(i[0] ,":",i[1]) 
