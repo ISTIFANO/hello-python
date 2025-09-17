@@ -32,12 +32,12 @@ print(content)
 
 # Challenge 2 : Recherche de Fichiers
 # methode 1
-with os.scandir(path) as allfiles:
-    for langue in allfiles:
-        print(langue)
-        if langue.is_file():
-            if (langue=="java.txt"):
-                print("FILE EXIST")
+# with os.scandir(path) as allfiles:
+#     for langue in allfiles:
+#         print(langue)
+#         if langue.is_file():
+#             if (langue=="java.txt"):
+#                 print("FILE EXIST")
 
 # methode 2
 if(os.path.exists(path)):
@@ -54,3 +54,18 @@ else:
             print("Directory already exists.")
     except Exception as Error:
         print(Error)
+#  Création de Répertoires
+    try:
+        folderName="C:/Users/aamir/Desktop/YC/Python/hello-python/langues"
+        file = os.mkdir(folderName)
+        if(os.path.dirname(folderName)):
+            get_file = open(folderName+"/Repertoires.txt","w")
+            get_file.write("this is a Repertoires file ")
+            get_file.close()
+        print("folder has been created succ")
+    except FileExistsError:
+            print("Directory already exists.")
+    except Exception as Error:
+        print(Error)
+
+        # Challenge 5 : Copie Sélective de Fichiers
