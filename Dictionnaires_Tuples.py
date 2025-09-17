@@ -19,4 +19,22 @@ print(First_dict)
 
 # Afficher successivement :
 
+print(First_dict)
+
+# La liste des clés du dictionnaire
+
+for cle, value in First_dict.items():
+    
+    print(cle)
+
+# La liste des valeurs
+
+for cle, value in First_dict.items():
+    
+    print(value)
+
+    # La liste des paires clé-valeur
+
+
+
 
