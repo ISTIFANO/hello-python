@@ -68,7 +68,16 @@ for cle, value in notes_eleves.items():
 
 
 # les étudiants non admis et les valeurs des clés sont les moyennes obtenues
-
+dec ={}
 for cle, value in notes_eleves.items():
     if(value <10):
       print(cle)
+
+# Challenge 2 : Mise à Jour de Dictionnaires
+
+etudiantAdmis =  {'Aamir': 15.5, 'Yassine': 19.0, 'kamal': 14.2, 'salma': 20.0, 'Saad': 11.3}
+etudiantNonAdmis = {'Aamir': 8.7, 'Ahmed': 7.5, 'Haenae': 9.8}
+
+etudiantAdmis.update(etudiantNonAdmis)
+
+print(etudiantAdmis)
