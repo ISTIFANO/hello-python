@@ -56,7 +56,7 @@ else:
         print(Error)
 #  Création de Répertoires
     try:
-        folderName="C:/Users/aamir/Desktop/YC/Python/hello-python/langues"
+        folderName="langues3"
         file = os.mkdir(folderName)
         if(os.path.dirname(folderName)):
             get_file = open(folderName+"/Repertoires.txt","w")
