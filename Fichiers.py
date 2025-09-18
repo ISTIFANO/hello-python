@@ -80,4 +80,20 @@ else:
              print(error)            
 
              
-          
+               # Challenge 5 : Copie Sélective de Fichiers
+lists = ["Hello Aamie" , "HelloAA", "heelo"]
+with open(path+"/Filles/test.txt" , "w") as f :
+    for i in lists :
+        print(i) 
+        k = i 
+        f.write(f"{i}\n")
+enregistred = 0 
+with open(path+"/Filles/test.txt" , "r") as f :
+    lines = f.readlines()
+    for i in lists :
+        i = i
+        if i in lines :
+            enregistred +=1 
+print(enregistred)
+if enregistred == len(lists) : 
+    print("the data saved correctly")   
