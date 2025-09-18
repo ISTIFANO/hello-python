@@ -93,6 +93,20 @@ print(list)
 
 # Challenge 4 : Tri d'un Dictionnaire
 
+list =["aamir","elamiri","istifano"]
+list2 =[2,3,4]
+globalList = dict(zip(list,list2))
+workingList = globalList.items()
+
+for i in range(len(workingList)):
+    for j in range(len(workingList)):
+        if(globalList[i][1]>globalList[j][1]):
+            tmp = globalList[i]
+            globalList[i]=globalList[j]
+            globalList[j]=tmp
+
+print(dict(workingList))
+
 # Challenge 5 : Manipulation de tuples
 
 
