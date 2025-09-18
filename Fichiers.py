@@ -62,10 +62,22 @@ else:
             get_file = open(folderName+"/Repertoires.txt","w")
             get_file.write("this is a Repertoires file ")
             get_file.close()
-        print("folder has been created succ")
+        print("file has been created succ")
     except FileExistsError:
             print("Directory already exists.")
     except Exception as Error:
         print(Error)
 
         # Challenge 5 : Copie Sélective de Fichiers
+        try:
+            folder="files01"
+            createFolder=os.mkdir(folder)
+            if(os.path.dirname(folder)):
+                 getfile = open(folderName+"Test.txt","w")
+                 getfile.write('this is all you to be ai developer ')
+                 getfile.close()
+        except Exception as error:
+             print(error)            
+
+             
+          
