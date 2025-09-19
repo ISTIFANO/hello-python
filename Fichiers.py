@@ -80,18 +80,18 @@ else:
              print(error)            
 
              
-               # Challenge 5 : Copie Sélective de Fichiers
+# Challenge 5 : Copie Sélective de Fichiers
+
 lists = ["Hello Aamie" , "HelloAA", "heelo"]
-with open(path+"/Filles/test.txt" , "w") as f :
+with open(path+"/Files/php.txt" , "w") as f :
     for i in lists :
-        print(i) 
-        k = i 
+        k = i +"/n"
         f.write(f"{i}\n")
 enregistred = 0 
 with open(path+"/Filles/test.txt" , "r") as f :
     lines = f.readlines()
     for i in lists :
-        i = i
+        i = i+"/n"
         if i in lines :
             enregistred +=1 
 print(enregistred)
