@@ -1,77 +1,76 @@
-#  Transformer une liste imbriquée avec une fonction récursive.
-list2 =[2,2,4,9,8,3]
-#  map 
-resultat = list(map(lambda num:num*num,list2))
-print(resultat)
+# Challenge 1 : Fusion de dictionnaires avec mise à jour personnalisée
+dict_a = {'x': 1, 'y': 2}
+dict_b = {'y': 3, 'z': 4}
 
-# filter 
+def fusionner_dicts(d1, d2, fonction):
+    resultat = {}
+    for cle, valeur in d1.items():
+        resultat.setdefault(cle, valeur)
+    for cle, valeur in d2.items():
+        if cle in resultat:
+            resultat[cle] = fonction(resultat[cle], valeur)
+        else:
+            resultat.setdefault(cle, valeur)
+    return resultat
 
-filter_resultat = list(filter(lambda number:number <5,list2))
-
-print(filter_resultat)
+print(fusionner_dicts(dict_a, dict_b, lambda a, b: a + b))
 
 
-# Challenge 2 : Transformation Avancée de Données
+# Challenge 2 : Filtrage d’un dictionnaire
+def filtrer_dict(dictionnaire: dict, fonction):
+    items = list(dictionnaire.items())
+    print("Items origine :", items)
+    dict_filtre = dict(filter(lambda elem: fonction(elem[1]), items))
+    print("Dictionnaire filtre :", dict_filtre)
 
-mixed_list = [2,3,-4,9,-6,8]
+dict_test = {'p': 5, 'q': 12, 'r': 8, 's': 15}
+filtrer_dict(dict_test, lambda val: val > 10)
 
-get_number_positive = list(filter(lambda number : number>0,mixed_list))
-get_cub_nb = list(map(lambda number : number*number,get_number_positive))
 
-get_sorted_nb = list(sorted(get_cub_nb))
-print(get_sorted_nb)
+# Challenge 3 : Création de tuples à partir de dictionnaires
+def dict_vers_tuples(dictionnaire, fonction):
+    items = list(dictionnaire.items())
+    tri = sorted(items, key=fonction)
+    print("Tri :", tri)
+notes = {'math': 10, 'physique': 5, 'chimie': 15}
+dict_vers_tuples(notes, lambda item: item[1])
 
-# Challenge 3 : Tri personnalisé avec clé dynamique
-list_etudiant = [{'nom': 'Aamie', 'note': 12}, {'nom': 'Aadkde', 'note': 21}]
-trier_etudiants = list(sorted(list_etudiant, key=lambda number:number["note"],reverse=True) and filter(lambda student: student["note"] > 0, list_etudiant))
 
-print(trier_etudiants)
+# Challenge 4 : Regroupement par clé dans un dictionnaire
+def regrouper_par_cle(paires):
+    resultat = {}
+    for cle, valeur in paires: 
+        if cle not in resultat: 
+            resultat[cle] = []       
+        resultat[cle].append(valeur)      
+    return resultat
 
-# Challenge 4 : Fusion intelligente de listes
+paires = [('a', 1), ('b', 2), ('a', 3), ('c', 4)]
+print(regrouper_par_cle(paires))
 
-listenb1 = [1,7,8,9,5,95]
-listenb2 =[23,3,83,54]
-def sortedListe(list33):
-    return list(sorted(list33))
-def  fusionner_listes(list11,list2):
-    list11 = list11.extend(list2)
-    remove_Redoublant = list(set(list11))
-    return sortedListe(remove_Redoublant)
-    
-fusionner_listes(listenb1,listenb2)
 
-# Challenge 5 : Partitionnement de liste
+# Challenge 5 : Transformation de tuples avec fonction
+def transformer_tuples(liste_tuples, fonction):
+    resultat = []
+    for tup in liste_tuples:
+        nouveau_tup = tuple(map(fonction, tup))  
+        resultat.append(nouveau_tup)         
+    return resultat
 
-def paire(listez):
-    return list(filter(lambda number : number %2 ==0),listez)
-def impaire(listez):
-    return list(filter(lambda number : number %2 !=0),listez)
-globalListe  = listenb1.append(listenb2)
-get_paire = paire(globalListe)
-get_impaire = impaire(globalListe)
-def tupleFunction(listpaire,listimpaire):
-    return tuple(listimpaire,listpaire)
+tuples_initiaux = [(1, 2), (3, 4)]
+print(transformer_tuples(tuples_initiaux, lambda n: n * 2))
 
-tupleFunction(get_paire,get_impaire)    
 
-# Challenge 6 : Réduction avec accumulation personnalisée
-from functools import reduce
-nums = [4,5,6,9]
+# Challenge 6 : Dictionnaire imbriqué à plat
+def aplatir_dict(dictionnaire, prefixe=''):
+    resultat = []
+    for cle, valeur in dictionnaire.items():
+        newCle = f"{prefixe}.{cle}" if prefixe else cle
+        if isinstance(valeur, dict):
+            resultat += aplatir_dict(valeur, newCle)
+        else:
+            resultat.append((newCle, valeur))
+    return resultat
 
-reduire_liste =  reduce(lambda number1,number2 : number1+number2,nums)
-
-print(reduire_liste)
-
-# Challenge 7 : Transformation imbriquée
-listCh7 = [1, [2, 3, [4, 5]], 6]
-
-for i in range(len(listCh7)):
-    if(isinstance(listCh7[i],(list))):
-        for j in range(listCh7[i]):
-           list22+= list(map(lambda num:num*num,listCh7[i]))
-    else:
-           list2+= list(map(lambda num:num*num,listCh7[i])) 
-  
-globalList= list2,list2    
-
-print(globalList)
+dict_imbr = {'a': 1, 'b': {'c': 2, 'd': 3}}
+print(aplatir_dict(dict_imbr))
