@@ -211,5 +211,61 @@ with connected.connect() as conn:
 
 # Afficher le prix moyen des plats par catégorie et le coût moyen des ingrédients par plat.
 
+stmt = (
+    select(
+        categories_table.c.name.label("categorie"),
+        func.avg(plats_table.c.prix).label("prix_moyen_plats")
+    )
+    .select_from(categories_table)
+    .join(plats_table, categories_table.c.id == plats_table.c.categorie_id, isouter=True)
+    .group_by(categories_table.c.name)
+    .order_by(categories_table.c.name)
+)
+
+stmt = (
+    select(
+        plats_table.c.name.label("plat"),
+        func.avg(plat_ingredients.c.quantite * ingredients_table.c.prix_unitaire).label("cout_moyen_ingredients")
+    )
+    .join(plat_ingredients, plats_table.c.id == plat_ingredients.c.plat_id)
+.join(ingredients_table, plat_ingredients.c.ingredient_id == ingredients_table.c.id)
+.group_by(plats_table.c.name)
+.order_by(plats_table.c.name)
+)
+
+with connected.connect() as conn:
+    print("moyen des plats par categorie :")
+    for row in conn.execute(stmt):
+        print(row)
+
+    print(" cout moyen des ingredients par plat :")
+    for row in conn.execute(stmt):
+        print(row)
+
+# Afficher le nombre de commandes par client, trié par ordre décroissant.
+
+stmt = select(clients.c.name.label("clients"),func.count(commandes_table.c.id.label("clients"))
+            .join(clients,commandes_table.c.client_id== clients.c.id)).group_by(clients.c.name)
+
+with connected.connect() as conn:
+    print("moyen des plats par categorie :")
+    for row in conn.execute(stmt):
+        print(row)
+
+stmt = (
+    select(
+        clients.c.id,
+        clients.c.name,
+        func.count(commandes_table.c.id).label("nombre_commandes")
+    )
+    .join(commandes_table, clients.c.id == commandes_table.c.client_id)
+    .group_by(clients.c.id,clients.c.name)
+    .having(func.count(commandes_table.c.id) >2)
+)
+
+with connected.connect() as conn:
+    for row in conn.execute(stmt):
+        print(row)
+
 
 
