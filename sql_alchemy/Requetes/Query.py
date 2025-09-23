@@ -194,4 +194,22 @@ with connected.connect() as conn:
 
 #question 09 
 # Afficher le nombre de plats pour chaque catégorie, y compris celles sans plats.
+stmt = (
+    select(
+        categories_table.c.name.label("categorie"),
+        func.count(plats_table.c.id).label("nombre_plats")
+    )
+    .select_from(categories_table)  # important: on part des catégories
+    .join(plats_table, categories_table.c.id == plats_table.c.categorie_id, isouter=True)
+    .group_by(categories_table.c.name)
+    .order_by(categories_table.c.name)
+)
+
+with connected.connect() as conn:
+    for row in conn.execute(stmt):
+        print(row)
+
+# Afficher le prix moyen des plats par catégorie et le coût moyen des ingrédients par plat.
+
+
 
