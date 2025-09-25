@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Table, Column,select, Integer,or_, String, MetaData, DECIMAL, Text, ForeignKey, DateTime, func,desc,fetchall
+from sqlalchemy import create_engine, Table,delete, Column,select, Integer,or_, insert,String, MetaData, DECIMAL, Text, ForeignKey, DateTime, func,desc,fetchall
 import os
 from dotenv import load_dotenv
 
@@ -199,7 +199,7 @@ stmt = (
         categories_table.c.name.label("categorie"),
         func.count(plats_table.c.id).label("nombre_plats")
     )
-    .select_from(categories_table)  # important: on part des catégories
+    .select_from(categories_table)  
     .join(plats_table, categories_table.c.id == plats_table.c.categorie_id, isouter=True)
     .group_by(categories_table.c.name)
     .order_by(categories_table.c.name)
@@ -267,5 +267,161 @@ with connected.connect() as conn:
     for row in conn.execute(stmt):
         print(row)
 
+stmt = (
+    select(
+        plats_table.c.name.label("plat"),
+        func.sum(commandes_table.c.quantite).label("total_quantite"),
+        func.avg(avis_table.c.note).label("note_moyenne")
+    )
+    .join(commandes_table, plats_table.c.id == commandes_table.c.plat_id)
+    .join(avis_table, plats_table.c.id == avis_table.c.plat_id, isouter=True)
+    .group_by(plats_table.c.name)
+    .having(func.sum(commandes_table.c.quantite) > 3)
+    .order_by(func.sum(commandes_table.c.quantite).desc())
+)
 
 
+from datetime import date
+
+stmt = (
+    select(
+        commandes_table.c.id.label("commande_id"),
+        commandes_table.c.date,
+        clients.c.name.label("client")
+    )
+    .join(clients, commandes_table.c.client_id == clients.c.id)
+    .where(commandes_table.c.date.between(date(2025, 7, 1), date(2025, 9, 30)))
+    .order_by(commandes_table.c.date)
+)
+
+
+query = select(func.max(commandes_table.c.date)).scalar_subquery()
+
+stmt = (
+    select(
+        commandes_table.c.id.label("commande_id"),
+        clients.c.name.label("client"),
+        plats_table.c.name.label("plat"),
+        commandes_plats_table.c.quantite
+    )
+    .join(clients, commandes_table.c.client_id == clients.c.id)
+    .join(commandes_plats_table, commandes_table.c.id == commandes_plats_table.c.commande_id)
+    .join(plats_table, commandes_plats_table.c.plat_id == plats_table.c.id)
+    .order_by(commandes_table.c.date_commande,desc()).limit(1)
+)
+with connected.connect() as conn:
+    for row in conn.execute(stmt):
+        print(row)
+
+# Afficher les clients ayant passé une commande d’un montant supérieur à 150, avec leur numéro de téléphone.
+
+stmt = (
+    select(
+        commandes_table.c.id.label("commande_id"),
+        clients.c.name.label("client"),
+        plats_table.c.name.label("plat"),
+      #
+    )
+    .join(clients, commandes_table.c.client_id == clients.c.id)
+    .join(commandes_plats_table, commandes_table.c.id == commandes_plats_table.c.commande_id)
+    .join(plats_table, commandes_plats_table.c.plat_id == plats_table.c.id)
+    .order_by(commandes_table.c.id).having(func.sum(plats_table.c.price * commandes_plats_table.c.quantite)>150)
+)   
+
+with connected.connect() as conn:
+    for row in conn.execute(stmt):
+        print(row)
+
+# Afficher les plats dont le coût total des ingrédients est supérieur à 50% du prix du plat.
+
+stmt = (
+    select(
+        plats_table.c.name.label("plat"),
+        plats_table.c.prix.label("prix_plat"),
+        func.sum(plat_ingredients.c.quantite * ingredients_table.c.prix_unitaire).label("cout_ingredients")
+    )
+    .join(plat_ingredients, plats_table.c.id == plat_ingredients.c.plat_id)
+    .join(ingredients_table, plat_ingredients.c.ingredient_id == ingredients_table.c.id)
+    .group_by(plats_table.c.id, plats_table.c.name, plats_table.c.prix)
+    .having(func.sum(plat_ingredients.c.quantite * ingredients_table.c.prix_unitaire) > 0.5 * plats_table.c.prix)
+    .order_by(plats_table.c.name)
+)
+
+with connected.connect() as conn:
+    for row in conn.execute(stmt):
+        print(row)
+
+
+# Ajouter un nouveau plat dans la catégorie "Végétarien" avec deux ingrédients.
+
+with connected.connect() as conn:
+    categorieID = conn.execute(
+        select(categories_table.c.id).where(categories_table.c.nom == "Végétarien")
+    ).scalar_one()
+
+    result = conn.execute(
+        insert(plats_table).values(nom="Salade fraiche", prix=80, id_categorie=categorieID).returning(plats_table.c.id)
+    )
+    plat_id = result.scalar_one()
+
+    conn.execute(insert(ingredients_table), [
+        {"plat_id": plat_id, "ingredient_id": 1, "quantite": 2},
+        {"plat_id": plat_id, "ingredient_id": 3, "quantite": 1}
+    ])
+
+    conn.commit()
+    
+
+# Question 19 : Supprimer le client "Youssef El Khalfi", ses commandes et ses avis
+with engine.begin() as conn:
+    client_id = conn.execute(
+        select(clients.c.id).where(clients.c.nom == "Youssef El Khalfi")
+    ).scalar()
+
+    if client_id:
+        commande_ids = conn.execute(
+            select(commandes_table.c.id).where(commandes_table.c.client_id == client_id)
+        ).scalars().all()
+
+        if commande_ids:
+            conn.execute(
+                commandes_plats_table.delete().where(
+                    commandes_plats_table.c.commande_id.in_(commande_ids)
+                )
+            )
+
+        conn.execute(avis_table.delete().where(avis_table.c.client_id == client_id))
+
+        conn.execute(commandes_table.delete().where(commandes_table.c.client_id == client_id))
+
+        conn.execute(clients.delete().where(clients.c.id == client_id))
+
+        print(" Client et toutes ses données supprimés")
+    else:
+        print(" Client non trouvé")
+
+
+# Afficher pour chaque client :
+# Son nom
+# Le nombre total de plats commandés
+# Le montant total dépensé
+# La note moyenne de leurs av
+stmt = (
+    select(
+        clients.c.nom.label("client"),
+        func.coalesce(func.sum(commandes_plats_table.c.quantite), 0).label("total_plats"),
+        func.coalesce(func.sum(commandes_plats_table.c.quantite * plats_table.c.prix), 0).label("total_depense"),
+        func.coalesce(func.avg(avis_table.c.note), 0).label("note_moyenne")
+    )
+    .select_from(clients)
+    .outerjoin(commandes_table, clients.c.id == commandes_table.c.client_id)
+    .outerjoin(commandes_plats_table, commandes_table.c.id == commandes_plats_table.c.commande_id)
+    .outerjoin(plats_table, commandes_plats_table.c.plat_id == plats_table.c.id)
+    .outerjoin(avis_table, clients.c.id == avis_table.c.client_id)
+    .group_by(clients.c.id, clients.c.nom)
+)
+
+with connected.connect() as conn:
+    rows = conn.execute(stmt).fetchall()
+    for row in rows:
+        print(row)
