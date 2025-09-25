@@ -74,3 +74,16 @@ def aplatir_dict(dictionnaire, prefixe=''):
 
 dict_imbr = {'a': 1, 'b': {'c': 2, 'd': 3}}
 print(aplatir_dict(dict_imbr))
+
+
+
+def functifontUPPLE(dic, crit):
+    tuple = tuple(dec.items)
+
+    return sorted(tuple,key=crit)
+
+crit01 = lambda x : x[0]
+crit02 = lambda x : x[1]
+dec={"Aamie":12}
+functifontUPPLE(dec,crit01)
+

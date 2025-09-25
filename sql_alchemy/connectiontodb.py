@@ -33,7 +33,6 @@ clients = Table(
     Column("telephone", String, nullable=True),
 )
 
-
 categories_table = Table(
     'categories', metadata,
     Column('id', Integer, primary_key=True),
@@ -98,5 +97,4 @@ plat_ingredients = Table(
 )
 
 metadata.create_all(connected)
-print("Tables created successfully")
 
